@@ -80,6 +80,7 @@ class AuthController extends Controller
  
             $out = [
                 "message" => "login_success",
+                "success" =>true,
                 "code"    => 200,
                 "result"  => [
                     "token" => $newtoken,
