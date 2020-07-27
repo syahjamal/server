@@ -20,5 +20,10 @@ $router->get('/key', function(){
     return str_random(32);
 });
 
+//Post register & login
 $router->post("/register", "AuthController@register");
 $router->post("/login", "AuthController@login");
+
+//Get Data User
+$router->get("/users", "DataUserController@index");
+$router->get("/users/{id}", "DataUserController@show");
