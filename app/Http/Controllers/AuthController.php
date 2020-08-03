@@ -34,12 +34,14 @@ class AuthController extends Controller
 
         if (User::create($data)) {
             $out = [
+                "success" => true,
                 "message" => "register_success",
                 "data" => $data,
                 "code"    => 201,
             ];
         } else {
             $out = [
+                "success" => false,
                 "message" => "failed_regiser",
                 "code"   => 404,
             ];
@@ -62,7 +64,7 @@ class AuthController extends Controller
  
         if (!$user) {
             $out = [
-                "message" => "login_vailed",
+                "message" => "login_failed",
                 "code"    => 401,
                 "result"  => [
                     "token" => null,
