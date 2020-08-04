@@ -24,6 +24,10 @@ $router->get('/key', function(){
 $router->post("/register", "AuthController@register");
 $router->post("/login", "AuthController@login");
 
-//Get Data User
+//Create & Get Data User
+$router->post("/create", "DataUserController@create");
 $router->get("/users", "DataUserController@index");
 $router->get("/users/{id}", "DataUserController@show");
+
+//Update Data
+$router->patch("/users/update", "DataUserController@update");
