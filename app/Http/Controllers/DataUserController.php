@@ -9,7 +9,8 @@ use Illuminate\Validation\Validator;
 use Illuminate\Support\Facades\Hash;
 
 class DataUserController extends Controller
-{
+{   
+    //create
     public function create(Request $request)
     {
         $this->validate($request, [
@@ -50,6 +51,7 @@ class DataUserController extends Controller
         return response()->json($out, $out['code']);
     }
 
+    //get
     public function index()
     {
         $getUser = User::OrderBy("id", "ASC")->paginate(10);
@@ -72,6 +74,7 @@ class DataUserController extends Controller
         return response()->json($user, 200);
     }
 
+    //Update
     public function update(Request $request, $id)
     {
         $this->validate($request, [
@@ -111,5 +114,24 @@ class DataUserController extends Controller
         }
 
         return response()->json($out, $out['code']);
+    }
+
+    //Delete
+    public function destroy($id)
+    {
+        $posts =  User::find($id);
+
+        if (!$posts) {
+            $data = [
+                "message" => "id not found",
+            ];
+        } else {
+            $posts->delete();
+            $data = [
+                "message" => "success_deleted"
+            ];
+        }
+
+        return response()->json($data, 200);
     }
 }

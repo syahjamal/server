@@ -31,3 +31,6 @@ $router->get("/users/{id}", "DataUserController@show");
 
 //Update Data
 $router->put('/users/{id}', 'DataUserController@update');
+
+//Delete
+$router->delete("users/{id}", "DataUserController@destroy");
