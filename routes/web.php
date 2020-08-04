@@ -30,4 +30,4 @@ $router->get("/users", "DataUserController@index");
 $router->get("/users/{id}", "DataUserController@show");
 
 //Update Data
-$router->patch("/users/update", "DataUserController@update");
+$router->put('/users/{id}', 'DataUserController@update');

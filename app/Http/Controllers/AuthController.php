@@ -31,7 +31,6 @@ class AuthController extends Controller
         ];
 
 
-
         if (User::create($data)) {
             $out = [
                 "success" => true,
