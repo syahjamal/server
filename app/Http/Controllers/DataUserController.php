@@ -82,30 +82,23 @@ class DataUserController extends Controller
             
             $id =$request->input('id');
             $username= $request->input("username");
+            $email = $request->input("email");
+            $password = $request->input("password");
 
             $this->validate($request, [
-                'username'=>'required|unique:users',
+                'username'=>'required|unique:users,username,'.$id,
                 'email' => 'required|max:255|unique:users,email,'.$id,
                 'password' => 'required|min:6',
                 'id'=>'required'
             ]);
-            
-            
-            
-            $email = $request->input("email");
-            $password = $request->input("password");
 
             $post=User::find($id);
-            
-
             $hashPwd = Hash::make($password);
             $data = [
                 "username"=>$username,
                 "email" => $email,
                 "password" => $hashPwd
             ];
-
-            
 
             $update = $post->update(
                 $data
