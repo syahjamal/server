@@ -75,46 +75,60 @@ class DataUserController extends Controller
     }
 
     //Update
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $this->validate($request, [
-            'username'=>'required',
-            'email' => 'required|unique:users|max:255',
-            'password' => 'required|min:6'
-        ]);
         
-        $username= $request->input("username");
-        $email = $request->input("email");
-        $password = $request->input("password");
+        if($request->isMethod('patch')){
+            
+            $id =$request->input('id');
+            $username= $request->input("username");
 
-        $hashPwd = Hash::make($password);
-        $data = [
-            "username"=>$username,
-            "email" => $email,
-            "password" => $hashPwd
-        ];
+            $this->validate($request, [
+                'username'=>'required|unique:users',
+                'email' => 'required|max:255|unique:users,email,'.$id,
+                'password' => 'required|min:6',
+                'id'=>'required'
+            ]);
+            
+            
+            
+            $email = $request->input("email");
+            $password = $request->input("password");
 
-        $post = User::whereId($id)->update(
-            $data
-        );
+            $post=User::find($id);
+            
 
-        if ($post) {
-            $out = [
-                "success" => true,
-                "message" => "update_success",
-                "data" => $data,
-                "code"    => 201,
+            $hashPwd = Hash::make($password);
+            $data = [
+                "username"=>$username,
+                "email" => $email,
+                "password" => $hashPwd
             ];
-        } else {
-            $out = [
-                "success" => false,
-                "message" => "update_failed_regiser",
-                "code"   => 404,
-            ];
+
+            
+
+            $update = $post->update(
+                $data
+            );
+
+            if ($update) {
+                $out = [
+                    "success" => true,
+                    "message" => "update_success",
+                    "data" => $data,
+                    "code"    => 201,
+                ];
+            } else {
+                $out = [
+                    "success" => false,
+                    "message" => "update_failed",
+                    "code"   => 404,
+                ];
+            }
+
+            return response()->json($out, $out['code']);
         }
-
-        return response()->json($out, $out['code']);
-    }
+    }   
 
     //Delete
     public function destroy($id)
@@ -134,4 +148,5 @@ class DataUserController extends Controller
 
         return response()->json($data, 200);
     }
+
 }
