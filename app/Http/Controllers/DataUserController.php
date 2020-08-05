@@ -75,12 +75,11 @@ class DataUserController extends Controller
     }
 
     //Update
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         
         if($request->isMethod('patch')){
-            
-            $id =$request->input('id');
+
             $username= $request->input("username");
             $email = $request->input("email");
             $password = $request->input("password");
@@ -89,7 +88,6 @@ class DataUserController extends Controller
                 'username'=>'required|unique:users,username,'.$id,
                 'email' => 'required|max:255|unique:users,email,'.$id,
                 'password' => 'required|min:6',
-                'id'=>'required'
             ]);
 
             $post=User::find($id);

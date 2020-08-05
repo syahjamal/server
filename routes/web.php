@@ -30,7 +30,7 @@ $router->get("/users", "DataUserController@index");
 $router->get("/users/{id}", "DataUserController@show");
 
 //Update Data
-$router->patch('/users/update', 'DataUserController@update');
+$router->patch('/users/{id}', 'DataUserController@update');
 
 //Delete
 $router->delete("users/{id}", "DataUserController@destroy");
